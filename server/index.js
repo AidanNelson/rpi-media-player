@@ -1,5 +1,5 @@
 const { Server } = require("socket.io");
-const network = require('network-config');
+const network = require("network-config");
 
 const io = new Server();
 const clients = {};
@@ -12,14 +12,12 @@ io.on("connection", (socket) => {
 io.listen(3000);
 console.log("Server listening on port 3000");
 
-
 setTimeout(() => {
   console.log("Telling clients to play video!");
-  io.sockets.emit('play');
-},10000);
+  io.sockets.emit("play");
+}, 10000);
 
-
-network.interfaces(function(err, interfaces){
+network.interfaces(function (err, interfaces) {
   /* interfaces should be something like:
 
   [{
@@ -31,22 +29,22 @@ network.interfaces(function(err, interfaces){
    },
    { ... }, { ... }]
   */
- console.log(interfaces);
- 
+  console.log(interfaces);
 });
 
 var network_configuration = {
-  ip: '192.168.1.10',
-  netmask: '255.255.255.0',
-  gateway: '192.168.1.1',
-  restart: true
-}
+  ip: "192.168.1.10",
+  netmask: "255.255.255.0",
+  gateway: "192.168.1.1",
+  restart: true,
+};
 
-network.configure('eth0', network_configuration, function (err) {
+network.configure("eth0", network_configuration, function (err) {
   console.log(err);
 });
 
-network.interfaces(function(err, interfaces){
- console.log(interfaces);
-});
-
+setTimeout(() => {
+  network.interfaces(function (err, interfaces) {
+    console.log(interfaces);
+  });
+}, 5000);
