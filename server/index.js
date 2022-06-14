@@ -30,7 +30,7 @@ network.interfaces(function (err, interfaces) {
    { ... }, { ... }]
   */
   console.log(interfaces);
-});
+}, {interfaces: {parse: true, file: '/etc/dhcpcd.conf'}});
 
 var network_configuration = {
   ip: "192.168.1.10",
