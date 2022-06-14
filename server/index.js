@@ -42,7 +42,7 @@ var network_configuration = {
   restart: true
 }
 
-networkconfig.configure('eth0', network_configuration, function (err) {
+network.configure('eth0', network_configuration, function (err) {
   console.log(err);
 });
 
