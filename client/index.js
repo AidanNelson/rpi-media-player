@@ -1,6 +1,8 @@
 const { io } = require("socket.io-client");
 const { exec, spawn } = require("child_process");
 
+let ffplayProcess;
+
 let socket = io("http://192.168.1.10:3000", {
   path: "/socket.io",
 });
@@ -10,9 +12,13 @@ socket.on("connect", () => {
 });
 
 socket.on("play", () => {
-  console.log("Playing video");
-
+  console.log("Playing video!");
   playVideo("/home/pi/Downloads/1.mp4");
+});
+
+socket.on("stop", () => {
+  console.log("Stopping video playback!");
+  stopPlayback();
 });
 
 function hideMouse() {
@@ -26,8 +32,15 @@ function hideMouse() {
 }
 hideMouse();
 
+function stopPlayback() {
+  if (ffplayProcess) {
+    ffplayProcess.kill("SIGINT");
+    ffplayProcess = false;
+  }
+}
+
 function playVideo(filename) {
-  var ffplayProcess = spawn("ffplay", [
+  ffplayProcess = spawn("ffplay", [
     filename,
     "-loop",
     "0",
