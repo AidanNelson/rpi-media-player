@@ -1,7 +1,7 @@
 const { io } = require("socket.io-client");
 const spawn = require("child_process").spawn;
 
-let socket = io("http://localhost:3000", {
+let socket = io("http://192.168.1.10:3000", {
   path: "/socket.io",
 });
 
@@ -15,7 +15,7 @@ socket.on("play", () => {
 });
 
 function playVideo(filename) {
-  var ffplayProcess = spawn("ffplay", [filename, ""]);
+  var ffplayProcess = spawn("ffplay", [filename, "-loop","0", "-fs","-infbuf"]);
 
   ffplayProcess.stderr.on("data", function (data) {
     console.log(data.toString());
