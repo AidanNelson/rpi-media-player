@@ -45,3 +45,8 @@ var network_configuration = {
 networkconfig.configure('eth0', network_configuration, function (err) {
   console.log(err);
 });
+
+network.interfaces(function(err, interfaces){
+ console.log(interfaces);
+});
+
