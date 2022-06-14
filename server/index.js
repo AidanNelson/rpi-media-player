@@ -34,3 +34,14 @@ network.interfaces(function(err, interfaces){
  console.log(interfaces);
  
 });
+
+var network_configuration = {
+  ip: '192.168.1.10',
+  netmask: '255.255.255.0',
+  gateway: '192.168.1.1',
+  restart: true
+}
+
+networkconfig.configure('eth0', network_configuration, function (err) {
+  console.log(err);
+});
