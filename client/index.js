@@ -1,5 +1,5 @@
 const { io } = require("socket.io-client");
-const spawn = require("child_process").spawn;
+const { exec, spawn } = require("child_process");
 
 let socket = io("http://192.168.1.10:3000", {
   path: "/socket.io",
@@ -11,11 +11,29 @@ socket.on("connect", () => {
 
 socket.on("play", () => {
   console.log("Playing video");
+
   playVideo("/home/pi/Downloads/1.mp4");
 });
 
+function hideMouse() {
+  exec("unclutter -idle 1", (error, stdout, stderr) => {
+    if (error) {
+      console.error(`exec error: ${error}`);
+    }
+    console.log(`stdout: ${stdout}`);
+    console.error(`stderr: ${stderr}`);
+  });
+}
+hideMouse();
+
 function playVideo(filename) {
-  var ffplayProcess = spawn("ffplay", [filename, "-loop","0", "-fs","-infbuf"]);
+  var ffplayProcess = spawn("ffplay", [
+    filename,
+    "-loop",
+    "0",
+    "-fs",
+    "-infbuf",
+  ]);
 
   ffplayProcess.stderr.on("data", function (data) {
     console.log(data.toString());
