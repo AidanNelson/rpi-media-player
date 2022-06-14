@@ -1,0 +1,1 @@
+Simple Server and client for synchronized playback of videos with ffplay on raspberry pi.
