@@ -13,7 +13,7 @@ socket.on("connect", () => {
 
 socket.on("play", () => {
   console.log("Playing video!");
-  playVideo("/home/pi/Downloads/1.mp4");
+  playVideo("/home/pi/video.mp4");
 });
 
 socket.on("stop", () => {
