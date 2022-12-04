@@ -4,7 +4,10 @@ const { exec, spawn } = require("child_process");
 // store a reference to the current ffplay process (if any)
 let ffplayProcess;
 
-let socket = io("http://192.168.1.10:3000", {
+// const SOCKET_SERVER = "https://localhost:443";
+const SOCKET_SERVER = "https://aidan.town";
+
+let socket = io(SOCKET_SERVER, {
   path: "/socket.io",
 });
 

@@ -1,4 +1,5 @@
-const SOCKET_SERVER = "https://localhost:443";
+// const SOCKET_SERVER = "https://localhost:443";
+const SOCKET_SERVER = "https://aidan.town";
 
 function init() {
   let socket = io(SOCKET_SERVER, {
