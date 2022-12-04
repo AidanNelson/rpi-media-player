@@ -13,8 +13,8 @@ async function main() {
   let ssl;
   if (process.env.ENVIRONMENT === "PRODUCTION") {
     ssl = {
-      key: fs.readFileSync("/path/to/private.key"),
-      cert: fs.readFileSync("/path/to/your_domain_name.crt"),
+      key: fs.readFileSync(process.cwd() + "/certs/privkey.pem"),
+      cert: fs.readFileSync(process.cwd() + "/certs/fullchain.pem"),
     };
   } else {
     ssl = await devcert.certificateFor("localhost");
@@ -47,25 +47,13 @@ async function main() {
       console.log(`Received command:${data.type}`);
       if (data.target === 0) {
         // send to all
+        console.log(`Sending command: ${data.type} to all clients.`);
         io.sockets.emit("cmd", data);
       } else {
         // TODO: address individual sockets
       }
     });
   });
-
-  function restartVideo() {
-    console.log("Telling clients to stop video!");
-    io.sockets.emit("stop");
-    setTimeout(() => {
-      console.log("Telling clients to play video!");
-      io.sockets.emit("play");
-    }, 5000);
-  }
-
-  setTimeout(() => {
-    restartVideo();
-  }, 10000);
 }
 
 main();
