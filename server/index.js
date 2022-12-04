@@ -42,6 +42,16 @@ async function main() {
   io.on("connection", (socket) => {
     console.log("Client connected:", socket.id);
     clients[socket.id] = {};
+
+    socket.on("cmd", (data) => {
+      console.log(`Received command:${data.type}`);
+      if (data.target === 0) {
+        // send to all
+        io.sockets.emit("cmd", data);
+      } else {
+        // TODO: address individual sockets
+      }
+    });
   });
 
   function restartVideo() {

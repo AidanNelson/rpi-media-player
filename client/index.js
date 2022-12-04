@@ -1,6 +1,7 @@
 const { io } = require("socket.io-client");
 const { exec, spawn } = require("child_process");
 
+// store a reference to the current ffplay process (if any)
 let ffplayProcess;
 
 let socket = io("http://192.168.1.10:3000", {
@@ -40,13 +41,7 @@ function stopPlayback() {
 }
 
 function playVideo(filename) {
-  ffplayProcess = spawn("ffplay", [
-    filename,
-    "-loop",
-    "0",
-    "-fs",
-    "-infbuf",
-  ]);
+  ffplayProcess = spawn("ffplay", [filename, "-loop", "0", "-fs", "-infbuf"]);
 
   ffplayProcess.stderr.on("data", function (data) {
     console.log(data.toString());
