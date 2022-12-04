@@ -17,12 +17,29 @@ socket.on("connect", () => {
 
 socket.on("play", () => {
   console.log("Playing video!");
-  playVideo("/home/pi/video.mp4");
+  playVideo("/home/pi/Videos/.mp4");
 });
 
 socket.on("stop", () => {
   console.log("Stopping video playback!");
   stopPlayback();
+});
+
+socket.on("cmd", (data) => {
+  switch (data.type) {
+    case "play":
+      // handle play command
+
+      stopPlayback();
+      const fileName = "/home/pi/Videos/" + data.videoId + ".mp4";
+      console.log("Attempting to play video:", fileName);
+      playVideo(fileName);
+      break;
+
+    default:
+      console.log("Not sure how to handle this command:", data.type);
+      break;
+  }
 });
 
 function hideMouse() {
