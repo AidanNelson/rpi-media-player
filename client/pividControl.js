@@ -1,4 +1,4 @@
-const https = require("https");
+const http = require("http");
 
 // pivid constants
 const PRE_BUFFER = 0.3;
@@ -11,9 +11,10 @@ const OUTPUT_RESOLUTION_REFRESH_RATE = 60;
 const OUTPUT_UPDATE_FREQUENCY = 60;
 
 function playVideo(fileName) {
+  const FILE_NAME = fileName;
   // https://stackoverflow.com/questions/42169906/nodejs-make-https-request-sending-json-data
   const playScript = {
-    buffer_tuning: { fileName: { pin: PRE_BUFFER } },
+    buffer_tuning: { FILE_NAME: { pin: PRE_BUFFER } },
     screens: {
       "HDMI-1": {
         mode: [
@@ -24,7 +25,7 @@ function playVideo(fileName) {
         update_hz: OUTPUT_UPDATE_FREQUENCY,
         layers: [
           {
-            media: fileName,
+            media: FILE_NAME,
             play: { t: [0, 30], v: [0, 30], repeat: true },
             buffer: RUN_BUFFER,
             to_size: [OUTPUT_RESOLUTION_WIDTH, OUTPUT_RESOLUTION_HEIGHT],
@@ -37,17 +38,17 @@ function playVideo(fileName) {
   var postData = JSON.stringify(playScript);
 
   var options = {
-    hostname: "http://localhost",
+    hostname: "localhost",
     port: 31415,
     path: "/play",
     method: "POST",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/json",
       "Content-Length": Buffer.byteLength(postData),
     },
   };
 
-  var req = https.request(options, (res) => {
+  var req = http.request(options, (res) => {
     console.log(`STATUS: ${res.statusCode}`);
     console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
     res.setEncoding("utf8");
@@ -71,4 +72,4 @@ function playVideo(fileName) {
   req.end();
 }
 
-playVideo("/home/aidan/Videos/water-4k-h265.mkv");
+playVideo("water-4k-h265.mkv");
