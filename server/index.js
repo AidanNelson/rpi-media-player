@@ -24,7 +24,7 @@ async function main() {
   // have our HTTPS server listen on HTTPS standard port (443)
   const port = 443;
   server.listen(port);
-  console.log(`Server listening on port ${port}`);
+  console.log(`Server listening on https://localhost:${port}`);
 
   // set up our socket.io server using the HTTPS server (with permissive CORS)
   let io = require("socket.io")();
