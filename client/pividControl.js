@@ -11,10 +11,9 @@ const OUTPUT_RESOLUTION_REFRESH_RATE = 60;
 const OUTPUT_UPDATE_FREQUENCY = 60;
 
 function playVideo(fileName) {
-  const FILE_NAME = fileName;
   // https://stackoverflow.com/questions/42169906/nodejs-make-https-request-sending-json-data
   const playScript = {
-    buffer_tuning: { FILE_NAME: { pin: PRE_BUFFER } },
+    buffer_tuning: {},
     screens: {
       "HDMI-1": {
         mode: [
@@ -25,7 +24,7 @@ function playVideo(fileName) {
         update_hz: OUTPUT_UPDATE_FREQUENCY,
         layers: [
           {
-            media: FILE_NAME,
+            media: fileName,
             play: { t: [0, 30], v: [0, 30], repeat: true },
             buffer: RUN_BUFFER,
             to_size: [OUTPUT_RESOLUTION_WIDTH, OUTPUT_RESOLUTION_HEIGHT],
@@ -35,6 +34,7 @@ function playVideo(fileName) {
     },
     zero_time: 0.0,
   };
+  playScript["buffer_tuning"][fileName] = { pin: PRE_BUFFER };
   var postData = JSON.stringify(playScript);
 
   var options = {
@@ -66,7 +66,7 @@ function playVideo(fileName) {
 
   //
   console.log("attempting to send pivid play script");
-  console.log(playScript);
+  console.log(postData);
   // write data to request body
   req.write(postData);
   req.end();
