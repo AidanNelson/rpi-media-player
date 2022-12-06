@@ -34,7 +34,7 @@ function playVideo(fileName) {
     },
     zero_time: 0.0,
   };
-  var postData = querystring.stringify(playScript);
+  var postData = JSON.stringify(playScript);
 
   var options = {
     hostname: "http://localhost",
