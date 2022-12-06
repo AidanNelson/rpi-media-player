@@ -25,7 +25,7 @@ function playVideo(fileName) {
         layers: [
           {
             media: fileName,
-            play: { t: [0, 30], v: [0, 30], repeat: True },
+            play: { t: [0, 30], v: [0, 30], repeat: true },
             buffer: RUN_BUFFER,
             to_size: [OUTPUT_RESOLUTION_WIDTH, OUTPUT_RESOLUTION_HEIGHT],
           },
